@@ -1,3 +1,18 @@
+ <style type="text/css">
+     .side-icon{
+        display: inline-block;
+        min-width: 1.5rem;
+        padding-bottom: 0.125em;
+        font-size: 1.1rem;
+        line-height: 1.40625rem;
+        vertical-align: middle;
+        color: #505d69;
+        -webkit-transition: all .4s;
+        transition: all .4s;
+        opacity: .75;
+        width:  1.5rem;
+     }
+ </style>
  <div class="vertical-menu">
 
                 <div data-simplebar class="h-100">
@@ -30,7 +45,7 @@
                 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-mail-send-line"></i>
+                                    <x-polaris-major-customers class="side-icon" />
                                     <span>Manage Customers</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
@@ -56,6 +71,17 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('category.all') }}">All Category</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="ri-mail-send-line"></i>
+                                    <span>Manage Product</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('product.all') }}">All Product</a></li>
 
                                 </ul>
                             </li>
