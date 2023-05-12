@@ -8,6 +8,8 @@ use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\Pos\UnitController;
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\ProductController;
+use App\Http\Controllers\Pos\PurchaseController;
+use App\Http\Controllers\Pos\DefaultController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -86,6 +88,28 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/delete/{id}', 'ProductDelete')->name('product.delete');
 
 });
+
+
+// Purchase Module Routes
+Route::controller(PurchaseController::class)->group(function () {
+    Route::get('/purchase/all', 'PurchaseAll')->name('purchase.all'); 
+    Route::get('/purchase/add', 'PurchaseAdd')->name('purchase.add');
+    Route::post('/purchase/store', 'PurchaseStore')->name('purchase.store');
+    Route::get('/purchase/delete/{id}', 'PurchaseDelete')->name('purchase.delete');
+    Route::get('/purchase/pending', 'PurchasePending')->name('purchase.pending');
+    Route::get('/purchase/approve/{id}', 'PurchaseApprove')->name('purchase.approve');
+
+});
+
+// Default Routes 
+Route::controller(DefaultController::class)->group(function () {
+    Route::get('/get-category', 'GetCategory')->name('get-category'); 
+    Route::get('/get-product', 'GetProduct')->name('get-product');
+    Route::get('/get-product', 'GetProduct')->name('get-product'); 
+   
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('admin.index');

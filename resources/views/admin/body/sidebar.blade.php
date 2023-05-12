@@ -28,15 +28,16 @@
 
                             <li>
                                 <a href="{{ route('dashboard') }}" class="waves-effect">
+                                     <i class="ri-home-fill"></i> 
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-mail-send-line"></i>
+                                      <i class="ri-hotel-fill"></i>
                                     <span>Manage Suppliers</span>
-                                </a>
+                                    </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('supplier.all') }}">All Supplier</a></li>
 
@@ -45,8 +46,8 @@
                 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <x-polaris-major-customers class="side-icon" />
-                                    <span>Manage Customers</span>
+                                       <i class="ri-shield-user-fill"></i>
+                <span>Manage Customers</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('customer.all') }}">All Customers</a></li>
@@ -55,8 +56,8 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-mail-send-line"></i>
-                                    <span>Manage Units</span>
+                                        <i class="ri-delete-back-fill"></i>
+                <span>Manage Units</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('unit.all') }}">All Unit</a></li>
@@ -66,8 +67,8 @@
                          
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-mail-send-line"></i>
-                                    <span>Manage Category</span>
+                                        <i class="ri-apps-2-fill"></i>
+                <span>Manage Category</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('category.all') }}">All Category</a></li>
@@ -77,11 +78,23 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-mail-send-line"></i>
-                                    <span>Manage Product</span>
+                                              <i class="ri-reddit-fill"></i>
+                <span>Manage Product</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('product.all') }}">All Product</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                   <i class="ri-oil-fill"></i>
+                <span>Manage Purchase</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('purchase.all') }}">All Purchase</a></li>
+                                    <li><a href="{{ route('purchase.pending') }}">Approval Purchase</a></li>
 
                                 </ul>
                             </li>
