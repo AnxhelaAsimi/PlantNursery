@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Pos;
 
 use App\Http\Controllers\Controller;
@@ -11,39 +10,42 @@ use Image;
 
 class CustomerController extends Controller
 {
-	//method responsible for loading the Customers View All page
-    public function CustomerAll(){
+    //method responsible for loading the Customers View All page
+    public function CustomerAll()
+    {
 
-         $customers = Customer::latest()->get();
-        return view('backend.customer.customer_all',compact('customers'));
+        $customers = Customer::latest()->get();
+        return view('backend.customer.customer_all', compact('customers'));
 
     } // End Method
 
     //Loads Add New Customer Form
-    public function CustomerAdd(){
-     return view('backend.customer.customer_add');
-    }    // End Method
+    public function CustomerAdd()
+    {
+        return view('backend.customer.customer_add');
+    } // End Method
 
-    public function CustomerStore(Request $request){
+    public function CustomerStore(Request $request)
+    {
 
         $image = $request->file('customer_image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension(); // 343434.png
-        Image::make($image)->resize(200,200)->save('upload/customer/'.$name_gen);
-        $save_url = 'upload/customer/'.$name_gen;
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension(); // 343434.png
+        Image::make($image)->resize(200, 200)->save('upload/customer/' . $name_gen);
+        $save_url = 'upload/customer/' . $name_gen;
 
         Customer::insert([
             'name' => $request->name,
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
             'address' => $request->address,
-            'customer_image' => $save_url ,
+            'customer_image' => $save_url,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
 
         ]);
 
-         $notification = array(
-            'message' => 'Customer Inserted Successfully', 
+        $notification = array(
+            'message' => 'Customer Inserted Successfully',
             'alert-type' => 'success'
         );
 
@@ -52,67 +54,70 @@ class CustomerController extends Controller
     } // End Method
 
 
-     public function CustomerEdit($id){
+    public function CustomerEdit($id)
+    {
 
-       $customer = Customer::findOrFail($id);
-       return view('backend.customer.customer_edit',compact('customer'));
+        $customer = Customer::findOrFail($id);
+        return view('backend.customer.customer_edit', compact('customer'));
 
     } // End Method
 
 
-    public function CustomerUpdate(Request $request){
+    public function CustomerUpdate(Request $request)
+    {
 
         $customer_id = $request->id;
         if ($request->file('customer_image')) {
 
-        $image = $request->file('customer_image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension(); // 343434.png
-        Image::make($image)->resize(200,200)->save('upload/customer/'.$name_gen);
-        $save_url = 'upload/customer/'.$name_gen;
+            $image = $request->file('customer_image');
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension(); // 343434.png
+            Image::make($image)->resize(200, 200)->save('upload/customer/' . $name_gen);
+            $save_url = 'upload/customer/' . $name_gen;
 
-        Customer::findOrFail($customer_id)->update([
-            'name' => $request->name,
-            'mobile_no' => $request->mobile_no,
-            'email' => $request->email,
-            'address' => $request->address,
-            'customer_image' => $save_url ,
-            'updated_by' => Auth::user()->id,
-            'updated_at' => Carbon::now(),
+            Customer::findOrFail($customer_id)->update([
+                'name' => $request->name,
+                'mobile_no' => $request->mobile_no,
+                'email' => $request->email,
+                'address' => $request->address,
+                'customer_image' => $save_url,
+                'updated_by' => Auth::user()->id,
+                'updated_at' => Carbon::now(),
 
-        ]);
+            ]);
 
-         $notification = array(
-            'message' => 'Customer Updated with Image Successfully', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Customer Updated with Image Successfully',
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('customer.all')->with($notification);
+            return redirect()->route('customer.all')->with($notification);
 
-        } else{
+        } else {
 
-          Customer::findOrFail($customer_id)->update([
-            'name' => $request->name,
-            'mobile_no' => $request->mobile_no,
-            'email' => $request->email,
-            'address' => $request->address, 
-            'updated_by' => Auth::user()->id,
-            'updated_at' => Carbon::now(),
+            Customer::findOrFail($customer_id)->update([
+                'name' => $request->name,
+                'mobile_no' => $request->mobile_no,
+                'email' => $request->email,
+                'address' => $request->address,
+                'updated_by' => Auth::user()->id,
+                'updated_at' => Carbon::now(),
 
-        ]);
+            ]);
 
-         $notification = array(
-            'message' => 'Customer Updated without Image Successfully', 
-            'alert-type' => 'success'
-        );
+            $notification = array(
+                'message' => 'Customer Updated without Image Successfully',
+                'alert-type' => 'success'
+            );
 
-        return redirect()->route('customer.all')->with($notification);
+            return redirect()->route('customer.all')->with($notification);
 
         } // end else 
 
     } // End Method
 
     //method used to delete a customer
-    public function CustomerDelete($id){
+    public function CustomerDelete($id)
+    {
 
         $customers = Customer::findOrFail($id);
         $img = $customers->customer_image;
@@ -121,7 +126,7 @@ class CustomerController extends Controller
         Customer::findOrFail($id)->delete();
 
         $notification = array(
-            'message' => 'Customer Deleted Successfully', 
+            'message' => 'Customer Deleted Successfully',
             'alert-type' => 'success'
         );
 
@@ -129,4 +134,3 @@ class CustomerController extends Controller
 
     } // End Method
 }
-

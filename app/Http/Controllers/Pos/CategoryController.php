@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Pos;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -11,76 +9,84 @@ use Illuminate\Support\Carbon;
 
 class CategoryController extends Controller
 {
-    public function CategoryAll(){
+    //Method responsible for loading the AllCategories View
+    public function CategoryAll()
+    {
 
-        $categoris = Category::latest()->get();
-        return view('backend.category.category_all',compact('categoris'));
+        $categories = Category::latest()->get();
+        return view('backend.category.category_all', compact('categories'));
 
-    } // End Mehtod 
+    } 
 
-    public function CategoryAdd(){
-    	return view('backend.category.category_add');
-    } // End Mehtod 
+    //Loads the Add Category View
+    public function CategoryAdd()
+    {
+        return view('backend.category.category_add');
+    }
 
-
-    public function CategoryStore(Request $request){
+    //Method responsible for storing a category in the database
+    public function CategoryStore(Request $request)
+    {
 
         Category::insert([
-            'name' => $request->name, 
+            'name' => $request->name,
             'created_by' => Auth::user()->id,
-            'created_at' => Carbon::now(), 
+            'created_at' => Carbon::now(),
 
         ]);
 
-         $notification = array(
-            'message' => 'Category Inserted Successfully', 
+        $notification = array(
+            'message' => 'Category Added Successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->route('category.all')->with($notification);
 
-    } // End Method
+    } 
 
-      public function CategoryEdit($id){
+    //Loads the Edit Category View
+    public function CategoryEdit($id)
+    {
 
-          $category = Category::findOrFail($id);
-        return view('backend.category.category_edit',compact('category'));
+        $categoryById = Category::findOrFail($id);
+        return view('backend.category.category_edit', compact('categoryById'));
 
-    }// End Method 
+    } 
 
-
-     public function CategoryUpdate(Request $request){
+    //Method responsible for updating a category record in the Database
+    public function CategoryUpdate(Request $request)
+    {
 
         $category_id = $request->id;
 
         Category::findOrFail($category_id)->update([
-            'name' => $request->name, 
+            'name' => $request->name,
             'updated_by' => Auth::user()->id,
-            'updated_at' => Carbon::now(), 
-
+            'updated_at' => Carbon::now(),
         ]);
 
-         $notification = array(
-            'message' => 'Category Updated Successfully', 
+        $notification = array(
+            'message' => 'Category Updated Successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->route('category.all')->with($notification);
 
-    }// End Method 
+    } 
 
+    //Method Responsible for Deleting a category record in the database
+    public function CategoryDelete($id)
+    {
 
-    public function CategoryDelete($id){
+        Category::findOrFail($id)->delete();
 
-          Category::findOrFail($id)->delete();
-
-       $notification = array(
-            'message' => 'Category Deleted Successfully', 
+        $notification = array(
+            'message' => 'Category Deleted Successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->back()->with($notification);
 
-    } // End Method 
+    } 
 
 }
