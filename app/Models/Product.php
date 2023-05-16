@@ -26,7 +26,7 @@ class Product extends Model
     public function PrdocutStore(Request $request){
 
         $image = $request->file('product_image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension(); // 343434.png
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension(); 
         Image::make($image)->resize(200,200)->save('upload/product/'.$name_gen);
         $save_url = 'upload/product/'.$name_gen;
 
@@ -43,11 +43,10 @@ class Product extends Model
         ]);
 
          $notification = array(
-            'message' => 'Prdouct Inserted Successfully', 
+            'message' => 'Product Added Successfully', 
             'alert-type' => 'success'
         );
 
         return redirect()->route('product.all')->with($notification);
-
-    } // End Method
+    } 
 }

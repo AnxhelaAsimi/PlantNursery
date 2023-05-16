@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers\Pos;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
@@ -10,26 +9,24 @@ use Image;
 
 class CustomerController extends Controller
 {
-    //method responsible for loading the Customers View All page
+    //Method responsible for loading the Customers View All page
     public function CustomerAll()
     {
+        $customersList = Customer::latest()->get();
+        return view('backend.customer.customer_all', compact('customersList'));
+    } 
 
-        $customers = Customer::latest()->get();
-        return view('backend.customer.customer_all', compact('customers'));
-
-    } // End Method
-
-    //Loads Add New Customer Form
+    //Loads AddNewCustomer view
     public function CustomerAdd()
     {
         return view('backend.customer.customer_add');
-    } // End Method
+    }
 
+    //Method responsible for storing a new customer record in the database
     public function CustomerStore(Request $request)
     {
-
         $image = $request->file('customer_image');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension(); // 343434.png
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(200, 200)->save('upload/customer/' . $name_gen);
         $save_url = 'upload/customer/' . $name_gen;
 
@@ -45,24 +42,22 @@ class CustomerController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Customer Inserted Successfully',
+            'message' => 'Customer Added Successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->route('customer.all')->with($notification);
 
-    } // End Method
+    } 
 
-
+    //Method responsible for loading the Edit Customer View
     public function CustomerEdit($id)
     {
-
         $customer = Customer::findOrFail($id);
         return view('backend.customer.customer_edit', compact('customer'));
+    }
 
-    } // End Method
-
-
+    //Method responsible fpr updating an existing customer record in the database
     public function CustomerUpdate(Request $request)
     {
 
@@ -70,7 +65,7 @@ class CustomerController extends Controller
         if ($request->file('customer_image')) {
 
             $image = $request->file('customer_image');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension(); // 343434.png
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension(); 
             Image::make($image)->resize(200, 200)->save('upload/customer/' . $name_gen);
             $save_url = 'upload/customer/' . $name_gen;
 
@@ -86,7 +81,7 @@ class CustomerController extends Controller
             ]);
 
             $notification = array(
-                'message' => 'Customer Updated with Image Successfully',
+                'message' => 'Customer Updated Successfully',
                 'alert-type' => 'success'
             );
 
@@ -105,17 +100,17 @@ class CustomerController extends Controller
             ]);
 
             $notification = array(
-                'message' => 'Customer Updated without Image Successfully',
+                'message' => 'Customer Updated Successfully',
                 'alert-type' => 'success'
             );
 
             return redirect()->route('customer.all')->with($notification);
 
-        } // end else 
+        }
 
-    } // End Method
+    } 
 
-    //method used to delete a customer
+    //Method used to delete an existing customer
     public function CustomerDelete($id)
     {
 
@@ -132,5 +127,5 @@ class CustomerController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // End Method
+    } 
 }

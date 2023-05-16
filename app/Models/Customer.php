@@ -31,7 +31,7 @@ class Customer extends Model
         ]);
 
          $notification = array(
-            'message' => 'Customer Inserted Successfully', 
+            'message' => 'Customer Added Successfully', 
             'alert-type' => 'success'
         );
 
