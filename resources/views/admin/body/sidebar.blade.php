@@ -95,9 +95,20 @@
                      <ul class="sub-menu" aria-expanded="false">
                          <li><a href="{{ route('purchase.all') }}">All Purchase</a></li>
                          <li><a href="{{ route('purchase.pending') }}">Approval Purchase</a></li>
-
+                         <li><a href="{{ route('daily.purchase.report') }}">Daily Purchase Report</a></li>
                      </ul>
-                 </li>
+                  </li>
+                  <li class="menu-title">Stock</li>
+                  <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-stock-fill"></i>
+                            <span>Manage Stock</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
+                            <li><a href="{{ route('stock.supplier.wise') }}">Supplier / Product Wise </a></li>
+                        </ul>
+                   </li>
              </ul>
          </div>
          <!-- Sidebar -->
