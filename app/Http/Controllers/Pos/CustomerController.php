@@ -188,4 +188,41 @@ class CustomerController extends Controller
         }
 
     }
+
+    public function CustomerInvoiceDetails($invoice_id){
+
+        $payment = Payment::where('invoice_id',$invoice_id)->first();
+        return view('backend.pdf.invoice_details_pdf',compact('payment'));
+
+    }
+
+    public function PaidCustomer(){
+        $allData = Payment::where('paid_status','!=','full_due')->get();
+        return view('backend.customer.customer_paid',compact('allData'));
+    }
+
+    public function PaidCustomerPrintPdf(){
+
+        $allData = Payment::where('paid_status','!=','full_due')->get();
+        return view('backend.pdf.customer_paid_pdf',compact('allData'));
+    }
+
+    public function CustomerWiseReport(){
+
+        $customers = Customer::all();
+        return view('backend.customer.customer_wise_report',compact('customers'));
+
+    }
+
+    public function CustomerWiseCreditReport(Request $request){
+
+         $allData = Payment::where('customer_id',$request->customer_id)->whereIn('paid_status',['full_due','partial_paid'])->get();
+        return view('backend.pdf.customer_wise_credit_pdf',compact('allData'));
+    }
+    
+    public function CustomerWisePaidReport(Request $request){
+
+         $allData = Payment::where('customer_id',$request->customer_id)->where('paid_status','!=','full_due')->get();
+        return view('backend.pdf.customer_wise_paid_pdf',compact('allData'));
+    }
 }
