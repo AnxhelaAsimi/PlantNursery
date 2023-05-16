@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Daily Invoice Report</h4>
+                        <h4 class="mb-sm-0">Customer Credit Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
-                                <li class="breadcrumb-item active">Daily Invoice Report</li>
+                                <li class="breadcrumb-item active">Customer Credit Report</li>
                             </ol>
                         </div>
 
@@ -29,12 +29,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="invoice-title">
+
                                         <h3>
-                                            <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
-                                                height="24" /> Botanical By Ona - Nursery
+                                          <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
+                                                height="24" />Botanical By Ona - Nursery
                                         </h3>
                                     </div>
                                     <hr>
+
                                     <div class="row">
                                         <div class="col-6 mt-4">
                                             <address>
@@ -44,31 +46,20 @@
                                         </div>
                                         <div class="col-6 mt-4 text-end">
                                             <address>
+
                                             </address>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <div>
-                                        <div class="p-2">
-                                            <h3 class="font-size-16"><strong>Daily Invoice Report
-                                                    <span class="btn btn-info"> {{ date('d-m-Y', strtotime($start_date)) }}
-                                                    </span> -
-                                                    <span class="btn btn-success"> {{ date('d-m-Y', strtotime($end_date)) }}
-                                                    </span>
-                                                </strong></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- end row -->
+
 
                             <div class="row">
                                 <div class="col-12">
                                     <div>
                                         <div class="p-2">
+
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
@@ -81,49 +72,59 @@
                                                             </td>
                                                             <td class="text-center"><strong>Date</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Description</strong>
+
+                                                            <td class="text-center"><strong>Due Amount </strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Amount </strong>
-                                                            </td>
+
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
+
                                                         @php
-                                                            $total_sum = '0';
+                                                            $total_due = '0';
                                                         @endphp
                                                         @foreach ($allData as $key => $item)
                                                             <tr>
-                                                                <td class="text-center">{{ $key + 1 }}</td>
+                                                                <td class="text-center"> {{ $key + 1 }} </td>
+                                                                <td class="text-center"> {{ $item['customer']['name'] }}
+                                                                </td>
                                                                 <td class="text-center">
-                                                                    {{ $item['payment']['customer']['name'] }}</td>
-                                                                <td class="text-center">#{{ $item->invoice_no }}</td>
+                                                                    #{{ $item['invoice']['invoice_no'] }} </td>
                                                                 <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                                                <td class="text-center">{{ $item->description }}</td>
-                                                                <td class="text-center">
-                                                                    {{ $item['payment']['total_amount'] }}</td>
+                                                                    {{ date('d-m-Y', strtotime($item['invoice']['date'])) }}
+                                                                </td>
+                                                                <td class="text-center"> {{ $item->due_amount }} </td>
+
                                                             </tr>
                                                             @php
-                                                                $total_sum += $item['payment']['total_amount'];
+                                                                $total_due += $item->due_amount;
                                                             @endphp
                                                         @endforeach
+
+
 
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
-                                                            <td class="no-line"></td>
                                                             <td class="no-line text-center">
-                                                                <strong>Grand Amount</strong>
+                                                                <strong>Grand Due Amount</strong>
                                                             </td>
                                                             <td class="no-line text-end">
-                                                                <h4 class="m-0">${{ $total_sum }}</h4>
+                                                                <h4 class="m-0">${{ $total_due }}</h4>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
+
+                                            @php
+                                                $date = new DateTime('now', new DateTimeZone('Europe/Tirane'));
+                                            @endphp
+                                            <i>Printing Time : {{ $date->format('F j, Y, g:i a') }}</i>
+
                                             <div class="d-print-none">
                                                 <div class="float-end">
                                                     <a href="javascript:window.print()"
@@ -135,12 +136,14 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div> <!-- end row -->
                         </div>
                     </div>
                 </div> <!-- end col -->
             </div> <!-- end row -->
+
         </div> <!-- container-fluid -->
     </div>
 @endsection
